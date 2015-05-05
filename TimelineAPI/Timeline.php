@@ -1,0 +1,135 @@
+<?php
+
+class Timeline
+{
+
+    private $TIMELINE_API = 'https://timeline-api.getpebble.com';
+    private $USER_PIN_API = '/v1/user/pins/';
+    private $USER_SUBSCRIPTION_API = '/v1/user/subscriptions/';
+    private $SHARED_PIN_API = '/v1/shared/pins/';
+
+
+    private $ERROR_CODES = [
+        200 => 'OK',
+        400 => 'The pin object submitted was invalid.',
+        403 => 'The API key submitted was invalid.',
+        410 => 'The user token submitted was invalid or does not exist.',
+        429 => 'Server is sending updates too quickly.',
+        503 => 'Could not save pin due to a temporary server error.'];
+
+
+    function pushPin($userToken, Pin $pin)
+    {
+        if (!is_string($userToken)) {
+            throwException('Usertoken not of type string');
+        }
+
+        if ($pin == null) {
+            throwException('Pin id cannot be null');
+        }
+
+        $id = $pin -> getID();
+        if ($id == null) {
+            throwException('Pin id cannot be null');
+        }
+
+        $headers = array('Content-Type: application/json',
+            'X-User-Token: ' . $userToken
+        );
+        $requestURL = $this->TIMELINE_API . $this->USER_PIN_API . $id;
+        return $this -> sendRequest($requestURL, 'PUT', $headers, $pin -> getData());
+    }
+
+    function pushSharedPin($key, Array $topics, Pin $pin)
+    {
+        if ($key == null || $key === '') {
+            throwException('Timeline API key invalid');
+        }
+        if ($pin == null) {
+            throwException('Pin id cannot be null');
+        }
+        $id = $pin -> getID();
+
+        if ($id == null) {
+            throwException('Pin id cannot be null');
+        }
+
+        $headers = array('Content-Type: application/json',
+            'X-API-Key: ' . $key,
+            'X-Pin-Topics' . join(',', $topics)
+        );
+        $requestURL = $this->TIMELINE_API . $this->USER_PIN_API . $id;
+        return $this -> sendRequest($requestURL, 'PUT', $headers, $pin -> getData());
+    }
+
+    function deletePin($userToken, $id)
+    {
+        if (!is_string($userToken)) {
+            throwException('Usertoken not of type string');
+        }
+
+        if ($id == null) {
+            throwException('Pin id cannot be null');
+        }
+
+        $headers = array('Content-Type: application/json',
+            'X-User-Token: ' . $userToken
+        );
+        $requestURL = $this->TIMELINE_API . $this->USER_PIN_API . $id;
+        return $this -> sendRequest($requestURL, 'DELETE', $headers);
+    }
+
+    function deleteSharedPin($key, $id)
+    {
+        if (!is_string($key)) {
+            throwException('API Key not of type string');
+        }
+
+        $headers = array('Content-Type: application/json',
+            'X-API-Key: ' . $key
+        );
+        $requestURL = $this->TIMELINE_API . $this->SHARED_PIN_API . $id;
+        return $this -> sendRequest($requestURL, 'DELETE', $headers);
+    }
+
+    function listSubscriptions($userToken)
+    {
+        if (!is_string($userToken)) {
+            throwException('Usertoken not of type string');
+        }
+
+        $headers = array('Content-Type: application/json',
+                    'X-User-Token: ' . $userToken
+        );
+        $requestURL = $this->TIMELINE_API . $this->USER_SUBSCRIPTION_API;
+        return $this -> sendRequest($requestURL, 'GET', $headers);
+    }
+
+    private function sendRequest($url, $method, Array $headers, $postData = null)
+    {
+
+        $ch = curl_init();
+        curl_setopt_array($ch, array(
+            CURLOPT_CUSTOMREQUEST=> $method,
+            CURLOPT_RETURNTRANSFER => TRUE,
+            CURLOPT_HTTPHEADER => $headers,
+            CURLOPT_POSTFIELDS => json_encode($postData),
+            CURLOPT_URL => $url,
+            CURLOPT_SSL_VERIFYPEER => false
+        ));
+        $response = curl_exec($ch);
+
+        $RESPONSE_CODE = curl_getinfo($ch)['http_code'];
+        $RESPONSE_STATUS = ($RESPONSE_CODE != null && array_key_exists($RESPONSE_CODE, $this -> ERROR_CODES)) ? $this -> ERROR_CODES[$RESPONSE_CODE] : 'Illegal response code.';
+
+        curl_close($ch);
+
+        if ($response === FALSE) {
+            die(curl_error($ch));
+        }
+        return array ('status' => array('code' => $RESPONSE_CODE, 'message' => $RESPONSE_STATUS), 'result' => json_decode($response, TRUE));
+    }
+
+}
+
+?>
