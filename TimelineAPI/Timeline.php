@@ -1,5 +1,9 @@
 <?php
 
+namespace TimelineAPI;
+
+require_once 'Pin.php';
+
 class Timeline
 {
 
@@ -113,7 +117,7 @@ class Timeline
             CURLOPT_CUSTOMREQUEST=> $method,
             CURLOPT_RETURNTRANSFER => TRUE,
             CURLOPT_HTTPHEADER => $headers,
-            CURLOPT_POSTFIELDS => json_encode($postData),
+            CURLOPT_POSTFIELDS => json_encode($postData, JSON_UNESCAPED_SLASHES),
             CURLOPT_URL => $url,
             CURLOPT_SSL_VERIFYPEER => false
         ));

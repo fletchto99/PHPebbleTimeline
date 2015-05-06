@@ -1,5 +1,14 @@
 <?php
 
+namespace TimelineAPI;
+
+use DateTime;
+
+require_once 'PinAction.php';
+require_once 'PinLayout.php';
+require_once 'PinNotification.php';
+require_once 'PinReminder.php';
+
 class Pin
 {
 
@@ -7,17 +16,26 @@ class Pin
     private $layout;
     private $id;
     private $duration;
+    private $createNotification;
+    private $updateNotification;
+    private $pinAction;
+    private $reminders = Array();
 
 
-    function __construct($id, DateTime $time, PinLayout $layout, $duration = null)
+    function __construct($id, DateTime $time, $layout, $duration = null, PinNotification $createNotification = null, $updateNotification = null, $pinAction = null)
     {
         if ($id == null) {
             throwException('ID cannot be null');
         }
         $this -> id = $id;
-        $this -> time = $time;
+        if ($time != null) {
+            $this -> time = $time -> format(DateTime::ISO8601);
+        }
         $this -> layout = $layout;
         $this -> duration = $duration;
+        $this -> createNotification = $createNotification;
+        $this -> updateNotification = $updateNotification;
+        $this -> pinAction = $pinAction;
     }
 
     function getID() {
@@ -25,26 +43,17 @@ class Pin
     }
 
     function getData() {
-    return ['id' => $this -> id];
+        $createNotification = $this -> updateNotification ? $this -> updateNotification -> getData() : null;
+        $updateNotification = $this -> updateNotification ? $this -> updateNotification -> getData() : null;
+        return array_filter(['id' => $this -> id, 'time' => $this -> time, 'duration' => $this -> duration,'createNotification' => $createNotification, 'updateNotification' => $updateNotification,'layout' => $this -> layout -> getData(), 'reminders' => $this -> reminders, '' ]);
     }
 
     function addReminder(PinReminder $reminder) {
-
-    }
-
-    /**
-     *
-     */
-    function addAction(PinAction $action) {
-
-    }
-
-    function addCreateNotification(PinNotification $notification) {
-
-    }
-
-    function addUpdateNotification(PinNotification $notification) {
-
+        if (count($this -> reminders) < 3 ) {
+                array_push($this -> reminders, $reminder -> getData());
+                return true;
+        }
+        return false;
     }
 
 }

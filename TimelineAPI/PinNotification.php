@@ -1,14 +1,23 @@
 <?php
 
+namespace TimelineAPI;
+
+use DateTime;
 
 class PinNotification {
 
     private $layout;
     private $time;
 
-   function __construct(PinLayout $layout, $time = null) {
+    function __construct($layout, DateTime $time = null) {
         $this -> layout = $layout;
-        $this -> time = $time;
+        if ($time != null) {
+            $this -> time = $time -> format(DateTime::ISO8601);
+        }
+    }
+
+    function getData() {
+        return array_filter(['layout' => $this -> layout, 'time' => $this -> time]);
     }
 
 }
