@@ -7,13 +7,13 @@ require_once 'Pin.php';
 class Timeline
 {
 
-    private $TIMELINE_API = 'https://timeline-api.getpebble.com';
-    private $USER_PIN_API = '/v1/user/pins/';
-    private $USER_SUBSCRIPTION_API = '/v1/user/subscriptions/';
-    private $SHARED_PIN_API = '/v1/shared/pins/';
+    private static $TIMELINE_API = 'https://timeline-api.getpebble.com';
+    private static $USER_PIN_API = '/v1/user/pins/';
+    private static $USER_SUBSCRIPTION_API = '/v1/user/subscriptions/';
+    private static $SHARED_PIN_API = '/v1/shared/pins/';
 
 
-    private $ERROR_CODES = [
+    private static $ERROR_CODES = [
         200 => 'OK',
         400 => 'The pin object submitted was invalid.',
         403 => 'The API key submitted was invalid.',
@@ -22,7 +22,7 @@ class Timeline
         503 => 'Could not save pin due to a temporary server error.'];
 
 
-    function pushPin($userToken, Pin $pin)
+    static function pushPin($userToken, Pin $pin)
     {
         if (!is_string($userToken)) {
             throwException('Usertoken not of type string');
@@ -40,11 +40,11 @@ class Timeline
         $headers = array('Content-Type: application/json',
             'X-User-Token: ' . $userToken
         );
-        $requestURL = $this->TIMELINE_API . $this->USER_PIN_API . $id;
-        return $this -> sendRequest($requestURL, 'PUT', $headers, $pin -> getData());
+        $requestURL = self::$TIMELINE_API . self::$USER_PIN_API . $id;
+        return self::sendRequest($requestURL, 'PUT', $headers, $pin -> getData());
     }
 
-    function pushSharedPin($key, Array $topics, Pin $pin)
+    static function pushSharedPin($key, Array $topics, Pin $pin)
     {
         if ($key == null || $key === '') {
             throwException('Timeline API key invalid');
@@ -58,15 +58,12 @@ class Timeline
             throwException('Pin id cannot be null');
         }
 
-        $headers = array('Content-Type: application/json',
-            'X-API-Key: ' . $key,
-            'X-Pin-Topics' . join(',', $topics)
-        );
-        $requestURL = $this->TIMELINE_API . $this->USER_PIN_API . $id;
-        return $this -> sendRequest($requestURL, 'PUT', $headers, $pin -> getData());
+        $headers = array('Content-Type: application/json', 'X-API-Key: ' . $key, 'X-Pin-Topics' . join(',', $topics));
+        $requestURL = self::$TIMELINE_API . self::$USER_PIN_API . $id;
+        return self::sendRequest($requestURL, 'PUT', $headers, $pin -> getData());
     }
 
-    function deletePin($userToken, $id)
+    static function deletePin($userToken, $id)
     {
         if (!is_string($userToken)) {
             throwException('Usertoken not of type string');
@@ -76,14 +73,12 @@ class Timeline
             throwException('Pin id cannot be null');
         }
 
-        $headers = array('Content-Type: application/json',
-            'X-User-Token: ' . $userToken
-        );
-        $requestURL = $this->TIMELINE_API . $this->USER_PIN_API . $id;
-        return $this -> sendRequest($requestURL, 'DELETE', $headers);
+        $headers = array('Content-Type: application/json', 'X-User-Token: ' . $userToken);
+        $requestURL = self::$TIMELINE_API . self::$USER_PIN_API . $id;
+        return self::sendRequest($requestURL, 'DELETE', $headers);
     }
 
-    function deleteSharedPin($key, $id)
+    static function deleteSharedPin($key, $id)
     {
         if (!is_string($key)) {
             throwException('API Key not of type string');
@@ -92,11 +87,11 @@ class Timeline
         $headers = array('Content-Type: application/json',
             'X-API-Key: ' . $key
         );
-        $requestURL = $this->TIMELINE_API . $this->SHARED_PIN_API . $id;
-        return $this -> sendRequest($requestURL, 'DELETE', $headers);
+        $requestURL = self::$TIMELINE_API . self::$SHARED_PIN_API . $id;
+        return self::sendRequest($requestURL, 'DELETE', $headers);
     }
 
-    function listSubscriptions($userToken)
+    static function listSubscriptions($userToken)
     {
         if (!is_string($userToken)) {
             throwException('Usertoken not of type string');
@@ -105,11 +100,11 @@ class Timeline
         $headers = array('Content-Type: application/json',
                     'X-User-Token: ' . $userToken
         );
-        $requestURL = $this->TIMELINE_API . $this->USER_SUBSCRIPTION_API;
-        return $this -> sendRequest($requestURL, 'GET', $headers);
+        $requestURL = self::$TIMELINE_API . self::$USER_SUBSCRIPTION_API;
+        return self::sendRequest($requestURL, 'GET', $headers);
     }
 
-    private function sendRequest($url, $method, Array $headers, $postData = null)
+    private static function sendRequest($url, $method, Array $headers, $postData = null)
     {
 
         $ch = curl_init();
@@ -124,7 +119,7 @@ class Timeline
         $response = curl_exec($ch);
 
         $RESPONSE_CODE = curl_getinfo($ch)['http_code'];
-        $RESPONSE_STATUS = ($RESPONSE_CODE != null && array_key_exists($RESPONSE_CODE, $this -> ERROR_CODES)) ? $this -> ERROR_CODES[$RESPONSE_CODE] : 'Illegal response code.';
+        $RESPONSE_STATUS = ($RESPONSE_CODE != null && array_key_exists($RESPONSE_CODE, self::$ERROR_CODES)) ? self::$ERROR_CODES[$RESPONSE_CODE] : 'Illegal response code.';
 
         curl_close($ch);
 
