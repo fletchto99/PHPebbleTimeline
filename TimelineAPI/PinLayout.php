@@ -46,12 +46,17 @@ class PinLayout
         if ($lastupdated != null) {
             $this->lastupdated = $lastupdated -> format(DateTime::ISO8601);
         }
-        $this->specialAttributes = $specialAttributes;
+        if ($specialAttributes != null) {
+            $this->specialAttributes = $specialAttributes;
+        } else {
+            $this-> specialAttributes = [];
+        }
+
     }
 
     function getData()
     {
-        return array_filter(['type' => $this->type, 'title' => $this->title, 'shortTitle' => $this->shorttitle, 'subtitle' => $this->subtitle, 'body' => $this->body, 'tinyIcon' => $this->tinyicon, 'smallIcon' => $this->smallicon, 'largeIcon' => $this->largeicon, 'foregroundColor' => $this->foregroundcolour, 'backgroundColour' => $this->backgroundcolour, 'headings' => $this->headings, 'paragraphs' => $this->paragraphs, 'lastUpdated' => $this->lastupdated]);
+        return array_filter(array_merge(['type' => $this->type, 'title' => $this->title, 'shortTitle' => $this->shorttitle, 'subtitle' => $this->subtitle, 'body' => $this->body, 'tinyIcon' => $this->tinyicon, 'smallIcon' => $this->smallicon, 'largeIcon' => $this->largeicon, 'foregroundColor' => $this->foregroundcolour, 'backgroundColour' => $this->backgroundcolour, 'headings' => $this->headings, 'paragraphs' => $this->paragraphs, 'lastUpdated' => $this->lastupdated], $this -> specialAttributes));
     }
 
 }
