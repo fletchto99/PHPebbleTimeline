@@ -22,14 +22,14 @@ class Pin
     private $reminders = Array();
 
 
-    function __construct($id, DateTime $time, $layout, $duration = null, PinNotification $createNotification = null, $updateNotification = null, $pinAction = null)
+    function __construct($id, DateTime $time, PinLayout $layout, $duration = null, PinNotification $createNotification = null, PinNotification $updateNotification = null, PinAction $pinAction = null)
     {
         if ($id == null) {
             throwException('ID cannot be null');
         }
         $this -> id = $id;
         if ($time != null) {
-            $this -> time = $time -> format(DateTime::ISO8601);
+            $this -> time = $time -> format('Y-m-d\TH:i:s\Z');
         }
         $this -> layout = $layout;
         $this -> duration = $duration;

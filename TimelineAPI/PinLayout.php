@@ -44,7 +44,7 @@ class PinLayout
         $this->headings = $headings;
         $this->paragraphs = $paragraphs;
         if ($lastupdated != null) {
-            $this->lastupdated = $lastupdated -> format(DateTime::ISO8601);
+            $this->lastupdated = $lastupdated -> format('Y-m-d\TH:i:s\Z');
         }
         if ($specialAttributes != null) {
             $this->specialAttributes = $specialAttributes;
