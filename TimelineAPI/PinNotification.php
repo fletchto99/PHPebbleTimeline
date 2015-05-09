@@ -17,7 +17,7 @@ class PinNotification {
     }
 
     function getData() {
-        return array_filter(['layout' => $this -> layout, 'time' => $this -> time]);
+        return array_filter(['layout' => $this -> layout -> getData(), 'time' => $this -> time]);
     }
 
 }

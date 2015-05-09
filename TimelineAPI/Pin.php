@@ -22,7 +22,7 @@ class Pin
     private $reminders = Array();
 
 
-    function __construct($id, DateTime $time, PinLayout$layout, $duration = null, PinNotification $createNotification = null, PinNotification $updateNotification = null, PinAction $pinAction = null)
+    function __construct($id, DateTime $time, PinLayout $layout, $duration = null, PinNotification $createNotification = null, PinNotification $updateNotification = null, PinAction $pinAction = null)
     {
         if ($id == null) {
             throwException('ID cannot be null');
@@ -43,7 +43,7 @@ class Pin
     }
 
     function getData() {
-        $createNotification = $this -> updateNotification ? $this -> updateNotification -> getData() : null;
+        $createNotification = $this -> createNotification ? $this -> createNotification -> getData() : null;
         $updateNotification = $this -> updateNotification ? $this -> updateNotification -> getData() : null;
         return array_filter(['id' => $this -> id, 'time' => $this -> time, 'duration' => $this -> duration,'createNotification' => $createNotification, 'updateNotification' => $updateNotification,'layout' => $this -> layout -> getData(), 'reminders' => $this -> reminders, '' ]);
     }
