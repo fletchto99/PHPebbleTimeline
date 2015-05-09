@@ -14,7 +14,7 @@ class Timeline
 
 
     private static $ERROR_CODES = [
-        200 => 'OK',
+        200 => 'Success!',
         400 => 'The pin object submitted was invalid.',
         403 => 'The API key submitted was invalid.',
         410 => 'The user token submitted was invalid or does not exist.',

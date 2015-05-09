@@ -22,7 +22,7 @@ class Pin
     private $reminders = Array();
 
 
-    function __construct($id, DateTime $time, PinLayout $layout, $duration = null, PinNotification $createNotification = null, PinNotification $updateNotification = null, PinAction $pinAction = null)
+    function __construct($id, DateTime $time, PinLayout$layout, $duration = null, PinNotification $createNotification = null, PinNotification $updateNotification = null, PinAction $pinAction = null)
     {
         if ($id == null) {
             throwException('ID cannot be null');
