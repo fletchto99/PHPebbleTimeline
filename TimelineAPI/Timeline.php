@@ -58,8 +58,8 @@ class Timeline
             throwException('Pin id cannot be null');
         }
 
-        $headers = array('Content-Type: application/json', 'X-API-Key: ' . $key, 'X-Pin-Topics' . join(',', $topics));
-        $requestURL = self::$TIMELINE_API . self::$USER_PIN_API . $id;
+        $headers = array('Content-Type: application/json', 'X-API-Key: ' . $key, 'X-Pin-Topics:' . join(',', $topics));
+        $requestURL = self::$TIMELINE_API . self::$SHARED_PIN_API . $id;
         return self::sendRequest($requestURL, 'PUT', $headers, $pin -> getData());
     }
 
