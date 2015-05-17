@@ -112,7 +112,7 @@ class Timeline
             CURLOPT_CUSTOMREQUEST=> $method,
             CURLOPT_RETURNTRANSFER => TRUE,
             CURLOPT_HTTPHEADER => $headers,
-            CURLOPT_POSTFIELDS => json_encode($postData, JSON_UNESCAPED_SLASHES),
+            CURLOPT_POSTFIELDS => json_encode($postData),
             CURLOPT_URL => $url,
             CURLOPT_SSL_VERIFYPEER => false
         ));
