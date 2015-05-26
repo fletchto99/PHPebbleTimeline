@@ -2,6 +2,8 @@
 
 namespace TimelineAPI;
 
+use Exception;
+
 require_once 'Pin.php';
 
 class Timeline
@@ -25,16 +27,16 @@ class Timeline
     static function pushPin($userToken, Pin $pin)
     {
         if (!is_string($userToken)) {
-            throwException('Usertoken not of type string');
+            throw new Exception('Usertoken not of type string');
         }
 
         if ($pin == null) {
-            throwException('Pin id cannot be null');
+            throw new Exception('Pin id cannot be null');
         }
 
         $id = $pin -> getID();
         if ($id == null) {
-            throwException('Pin id cannot be null');
+            throw new Exception('Pin id cannot be null');
         }
 
         $headers = array('Content-Type: application/json',
@@ -47,15 +49,15 @@ class Timeline
     static function pushSharedPin($key, Array $topics, Pin $pin)
     {
         if ($key == null || $key === '') {
-            throwException('Timeline API key invalid');
+            throw new Exception('Timeline API key invalid');
         }
         if ($pin == null) {
-            throwException('Pin id cannot be null');
+            throw new Exception('Pin id cannot be null');
         }
         $id = $pin -> getID();
 
         if ($id == null) {
-            throwException('Pin id cannot be null');
+            throw new Exception('Pin id cannot be null');
         }
 
         $headers = array('Content-Type: application/json', 'X-API-Key: ' . $key, 'X-Pin-Topics:' . join(',', $topics));
@@ -66,11 +68,11 @@ class Timeline
     static function deletePin($userToken, $id)
     {
         if (!is_string($userToken)) {
-            throwException('Usertoken not of type string');
+            throw new Exception('Usertoken not of type string');
         }
 
         if ($id == null) {
-            throwException('Pin id cannot be null');
+            throw new Exception('Pin id cannot be null');
         }
 
         $headers = array('Content-Type: application/json', 'X-User-Token: ' . $userToken);
@@ -81,7 +83,7 @@ class Timeline
     static function deleteSharedPin($key, $id)
     {
         if (!is_string($key)) {
-            throwException('API Key not of type string');
+            throw new Exception('API Key not of type string');
         }
 
         $headers = array('Content-Type: application/json',
@@ -94,7 +96,7 @@ class Timeline
     static function listSubscriptions($userToken)
     {
         if (!is_string($userToken)) {
-            throwException('Usertoken not of type string');
+            throw new Exception('Usertoken not of type string');
         }
 
         $headers = array('Content-Type: application/json',

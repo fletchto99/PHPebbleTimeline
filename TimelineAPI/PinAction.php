@@ -1,7 +1,8 @@
 <?php
 
-
 namespace TimelineAPI;
+
+use Exception;
 
 class PinAction {
 
@@ -9,19 +10,17 @@ class PinAction {
     private $launchcode;
     private $type;
 
-    function __construct($title, $launchcode, $type= null) {
+    function __construct($title, $launchcode, $type) {
         if ($title == null || $launchcode == null) {
-            throwException("Launchcode and title both must be specified");
+            throw new Exception("Launchcode and title both must be specified");
         }
         $this -> title = $title;
         $this -> launchcode = $launchcode;
-        if ($type == null) {
-            $this->type = PinActionType::OPEN_WATCH_APP;
-        }
+        $this -> type = $type;
     }
 
-    function getDataArray() {
-        return array_filter([ 'type' => $this -> type, 'title' => $this -> title, 'launchcode' => $this -> launchcode]);
+    function getData() {
+        return array_filter([ 'type' => $this -> type, 'title' => $this -> title, 'launchCode' => $this -> launchcode]);
     }
 
 }

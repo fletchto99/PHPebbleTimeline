@@ -153,7 +153,6 @@ class PinIcon
 
 class PebbleColour
 {
-
     const
         BLACK = '#000000',
         WHITE = '#FFFFFF',
@@ -219,5 +218,4 @@ class PebbleColour
         BLUE_MOON = '#0055FF',
         ELECTRIC_BLUE = '#55FFFF',
         CELESTE = '#AAFFF';
-
 }

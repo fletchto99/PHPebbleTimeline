@@ -3,6 +3,7 @@
 namespace TimelineAPI;
 
 use DateTime;
+use Exception;
 
 require_once 'PinAction.php';
 require_once 'PinLayout.php';
@@ -18,14 +19,14 @@ class Pin
     private $duration;
     private $createNotification;
     private $updateNotification;
-    private $pinAction;
+    private $actions = Array();
     private $reminders = Array();
 
 
-    function __construct($id, DateTime $time, PinLayout $layout, $duration = null, PinNotification $createNotification = null, PinNotification $updateNotification = null, PinAction $pinAction = null)
+    public function __construct($id, DateTime $time, PinLayout $layout, $duration = null, PinNotification $createNotification = null, PinNotification $updateNotification = null)
     {
         if ($id == null) {
-            throwException('ID cannot be null');
+            throw new Exception('ID cannot be null');
         }
         $this -> id = $id;
         if ($time != null) {
@@ -35,25 +36,28 @@ class Pin
         $this -> duration = $duration;
         $this -> createNotification = $createNotification;
         $this -> updateNotification = $updateNotification;
-        $this -> pinAction = $pinAction;
     }
 
-    function getID() {
+    public function getID() {
         return $this -> id;
     }
 
-    function getData() {
+    public function getData() {
         $createNotification = $this -> createNotification ? $this -> createNotification -> getData() : null;
         $updateNotification = $this -> updateNotification ? $this -> updateNotification -> getData() : null;
-        return array_filter(['id' => $this -> id, 'time' => $this -> time, 'duration' => $this -> duration,'createNotification' => $createNotification, 'updateNotification' => $updateNotification,'layout' => $this -> layout -> getData(), 'reminders' => $this -> reminders, '' ]);
+        return array_filter(['id' => $this -> id, 'time' => $this -> time, 'duration' => $this -> duration,'createNotification' => $createNotification, 'updateNotification' => $updateNotification,'layout' => $this -> layout -> getData(), 'reminders' => $this -> reminders, 'actions' => $this -> actions ]);
     }
 
-    function addReminder(PinReminder $reminder) {
+    public function addReminder(PinReminder $reminder) {
         if (count($this -> reminders) < 3 ) {
                 array_push($this -> reminders, $reminder -> getData());
                 return true;
         }
         return false;
+    }
+
+    public function addAction(PinAction $action) {
+        array_push($this -> actions, $action -> getData());
     }
 
 }
