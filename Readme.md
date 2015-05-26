@@ -183,9 +183,9 @@ $notification = new PinNotification($notificationLayout, new DateTime('now'));
 $notification -> getData();
 ````
 
-### Notification Object
+### Reminder Object
 
-A `PinReminder` object represents the [Notification Object](http://developer.getpebble.com/guides/timeline/pin-structure/#reminder-object) which will send a reminder to the user at a specific time.
+A `PinReminder` object represents the [Reminder Object](http://developer.getpebble.com/guides/timeline/pin-structure/#reminder-object) which will send a reminder to the user at a specific time.
 
 To create a reminder object be sure to use the `PinReminder` class
 
@@ -404,15 +404,14 @@ All Timeline [functions] return an associated array in the following form.
 
 
 
-[Pin]: #Pin-Object
-[PinLayout]: #Layout-Object
-[PinNotification]: #PinNotification-Object
-[PinReminder]: #PinReminder-Object
-[PinAction]: #PinAction-Object
-[PinIcon]: #PinIcon-Constant
-[PinLayoutType]: #PinLayoutType-Constant
-[PinLayoutTypes]: #PinLayoutType-Constant
-[PebbleColor]: #PebbleColor-Constant
-[responses]: #Timeline-Responses
-[functions]: #Timeline-Functions
-
+[Pin]: #pin-object
+[PinLayout]: #layout-object
+[PinNotification]: #notification-object
+[PinReminder]: #reminder-object
+[PinAction]: #action-object
+[PinIcon]: #pinicon-constant
+[PinLayoutType]: #pinlayouttype-constant
+[PinLayoutTypes]: #pinlayouttype-constant
+[PebbleColor]: #pebblecolor-constant
+[responses]: #timeline-responses
+[functions]: #timeline-functions
