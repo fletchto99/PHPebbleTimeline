@@ -95,8 +95,8 @@ $actionOne = new PinAction('RSVP Yes', 1, PinActionType::OPEN_WATCH_APP); // Pin
 $actionOne = new PinAction('RSVP No', 2, PinActionType::OPEN_WATCH_APP); // Pin action to reply no
 
 //Add the reminder objects
-$pin -> addReminder($actionOne);
-$pin -> addReminder($actionOne);
+$pin -> addAction($actionOne);
+$pin -> addAction($actionOne);
 ````
 
 ##### getData()
@@ -192,7 +192,7 @@ To create a reminder object be sure to use the `PinReminder` class
 ```php
 use TimelineAPI\PinReminder;
 ```
-A `PinNotification` Object accepts the following parameters.
+A `PinReminder` Object accepts the following parameters.
 
 | Name                  | Type              | Argument   | Default   | Description                                                                  |
 | ----                  | :----:            | :--------: | --------- | -------------                                                                |
@@ -203,7 +203,7 @@ Here is an example reminder.
 
 ````php
 $reminderlayout = new PinLayout(PinLayoutType::GENERIC_REMINDER, 'Sample reminder!', null, null, null, PinIcon::NOTIFICATION_FLAG);
-$reminder = new PinNotification($reminderlayout, new DateTime('now')); //send the reminder right away
+$reminder = new PinReminder($reminderlayout, new DateTime('now')); //send the reminder right away
 ````
 
 ##### getData()
@@ -211,7 +211,7 @@ $reminder = new PinNotification($reminderlayout, new DateTime('now')); //send th
 `getData` returns an associative array of the [PinReminder]'s data
 
 ````php
-$notification -> getData();
+$reminder -> getData();
 ````
 
 
