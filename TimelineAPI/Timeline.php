@@ -4,7 +4,7 @@ namespace TimelineAPI;
 
 use Exception;
 
-require_once 'Pin.php';
+require_once __DIR__ .DIRECTORY_SEPARATOR. 'Pin.php';
 
 class Timeline
 {

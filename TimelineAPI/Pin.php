@@ -5,10 +5,10 @@ namespace TimelineAPI;
 use DateTime;
 use Exception;
 
-require_once 'PinAction.php';
-require_once 'PinLayout.php';
-require_once 'PinNotification.php';
-require_once 'PinReminder.php';
+require_once __DIR__ .DIRECTORY_SEPARATOR.'PinAction.php';
+require_once __DIR__ .DIRECTORY_SEPARATOR.'PinLayout.php';
+require_once __DIR__ .DIRECTORY_SEPARATOR.'PinNotification.php';
+require_once __DIR__ .DIRECTORY_SEPARATOR.'PinReminder.php';
 
 class Pin
 {
