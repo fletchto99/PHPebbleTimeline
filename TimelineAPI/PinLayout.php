@@ -197,7 +197,7 @@ class PebbleColour
         GREEN = '#00FF00',
         ISLAMIC_GREEN = '#00AA00',
         MAY_GREEN = '#55AA55',
-        CADET_BLUE = '#55AAA',
+        CADET_BLUE = '#55AAAA',
         COBALT_BLUE = '#0055AA',
         DARK_BLUE = '#0000AA',
         ELECTRIC_ULTRAMARINE = '#5500FF',
@@ -217,5 +217,5 @@ class PebbleColour
         PICTON_BLUE = '#55AAFF',
         BLUE_MOON = '#0055FF',
         ELECTRIC_BLUE = '#55FFFF',
-        CELESTE = '#AAFFF';
+        CELESTE = '#AAFFFF';
 }
