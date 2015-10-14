@@ -10,14 +10,14 @@ class PinNotification {
     private $time;
 
     function __construct(PinLayout $layout, DateTime $time = null) {
-        $this -> layout = $layout;
+        $this->layout = $layout;
         if ($time != null) {
-            $this -> time = $time -> format('Y-m-d\TH:i:s\Z');
+            $this->time = $time->format('Y-m-d\TH:i:s\Z');
         }
     }
 
     function getData() {
-        return array_filter(['layout' => $this -> layout -> getData(), 'time' => $this -> time]);
+        return array_filter(['layout' => $this->layout->getData(), 'time' => $this->time]);
     }
 
 }
