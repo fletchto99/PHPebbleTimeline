@@ -129,8 +129,8 @@ A `PinLayout` Object accepts the following parameters. Note that some optional p
 | `tinyicon`            | [PinIcon]         | (optional) | null      | The pin's tiny icon                                                          |
 | `smallicon`           | [PinIcon]         | (optional) | null      | The pin's small icon                                                         |
 | `largeicon`           | [PinIcon]         | (optional) | null      | The pin's large icon                                                         |
-| `foregroundColor`     | [PebbleColor]     | (optional) | null      | The main color of the pin                                                    |
-| `backgroundColor`     | [PebbleColor]     | (optional) | null      | The background color of the pin                                              |
+| `foregroundColour`     | [PebbleColour]     | (optional) | null      | The main colour of the pin                                                    |
+| `backgroundColour`     | [PebbleColour]     | (optional) | null      | The background colour of the pin                                              |
 | `headings`            | Array             | (optional) | null      | The text headings of the pin. The amount must match the amount of paragraphs |
 | `paragraphs`          | Array             | (optional) | null      | The text sections of the pin. The amount must match the amount of headings   |
 | `lastupdated`         | DateTime          | (optional) | null      | The timestamp of when the pin's data (e.g. Weather forecast) was last updated|
@@ -280,20 +280,20 @@ The following code will get the URI for a Notification flag.
 $icon = PinIcon::NOTIFICATION_FLAG;
 ````
 
-### PebbleColor Constant
+### PebbleColour Constant
 
-A `PebbleColor` constant represents the [Pebble Colors](http://developer.getpebble.com/tools/color-picker/) that are available. See [available colors](docs/PebbleColors.md) for a list of all colors supported. (If a color is missing please let me know via the issue tracker!)
+A `PebbleColour` constant represents the [Pebble Colours](http://developer.getpebble.com/tools/Colour-picker/) that are available. See [available Colours](docs/PebbleColours.md) for a list of all colours supported. (If a colour is missing please let me know via the issue tracker!)
 
-To retrieve colors be sure to use the `PebbleColor` class
+To retrieve colours be sure to use the `PebbleColour` class
 
 ```php
-use TimelineAPI\PebbleColor;
+use TimelineAPI\PebbleColour;
 ```
 
-The following code will get the color code for red.
+The following code will get the colour code for red.
 
 ````php
-$color = PebbleColor::RED;
+$colour = PebbleColour::RED;
 ````
 
 ### PinActionType Constant
@@ -412,6 +412,6 @@ All Timeline [functions] return an associated array in the following form.
 [PinIcon]: #pinicon-constant
 [PinLayoutType]: #pinlayouttype-constant
 [PinLayoutTypes]: #pinlayouttype-constant
-[PebbleColor]: #pebblecolor-constant
+[PebbleColour]: #pebblecolour-constant
 [responses]: #timeline-responses
 [functions]: #timeline-functions

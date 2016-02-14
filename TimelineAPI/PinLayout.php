@@ -56,7 +56,7 @@ class PinLayout
 
     function getData()
     {
-        return array_filter(array_merge(['type' => $this->type, 'title' => $this->title, 'shortTitle' => $this->shorttitle, 'subtitle' => $this->subtitle, 'body' => $this->body, 'tinyIcon' => $this->tinyicon, 'smallIcon' => $this->smallicon, 'largeIcon' => $this->largeicon, 'foregroundColor' => $this->foregroundcolour, 'backgroundColor' => $this->backgroundcolour, 'headings' => $this->headings, 'paragraphs' => $this->paragraphs, 'lastUpdated' => $this->lastupdated], $this -> specialAttributes));
+        return array_filter(array_merge(['type' => $this->type, 'title' => $this->title, 'shortTitle' => $this->shorttitle, 'subtitle' => $this->subtitle, 'body' => $this->body, 'tinyIcon' => $this->tinyicon, 'smallIcon' => $this->smallicon, 'largeIcon' => $this->largeicon, 'foregroundColour' => $this->foregroundcolour, 'backgroundColour' => $this->backgroundcolour, 'headings' => $this->headings, 'paragraphs' => $this->paragraphs, 'lastUpdated' => $this->lastupdated], $this -> specialAttributes));
     }
 
 }
