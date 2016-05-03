@@ -15,8 +15,9 @@ class PinLayout
     private $tinyicon;
     private $smallicon;
     private $largeicon;
-    private $foregroundcolour;
-    private $backgroundcolour;
+    private $primarycolor;
+    private $secondarycolor;
+	private $backgroundcolor;
     private $headings;
     private $paragraphs;
     private $lastupdated;
@@ -26,10 +27,10 @@ class PinLayout
                          $shorttitle = null, $subtitle = null,
                          $body = null, $tinyicon = null,
                          $smallicon = null, $largeicon = null,
-                         $foregroundcolour = null,
-                         $backgroundcolour = null,
+                         $primarycolor = null,
+                         $backgroundcolor = null,
                          Array $headings = null, Array $paragraphs = null,
-                         DateTime $lastupdated = null, Array $specialAttributes = null)
+                         DateTime $lastupdated = null, Array $specialAttributes = null, $secondarycolor = null)
     {
         $this->type = $type;
         $this->title = $title;
@@ -39,8 +40,9 @@ class PinLayout
         $this->tinyicon = $tinyicon;
         $this->smallicon = $smallicon;
         $this->largeicon = $largeicon;
-        $this->foregroundcolour = $foregroundcolour;
-        $this->backgroundcolour = $backgroundcolour;
+        $this->primarycolor = $primarycolor;
+		$this->secondarycolor = $secondarycolor ?: $this->primarycolor;
+        $this->backgroundcolor = $backgroundcolor;
         $this->headings = $headings;
         $this->paragraphs = $paragraphs;
         if ($lastupdated != null) {
@@ -53,10 +55,14 @@ class PinLayout
         }
 
     }
+	
+	public function setSecondaryColor($color){
+		$this->secondarycolor = $color;
+	}
 
     function getData()
     {
-        return array_filter(array_merge(['type' => $this->type, 'title' => $this->title, 'shortTitle' => $this->shorttitle, 'subtitle' => $this->subtitle, 'body' => $this->body, 'tinyIcon' => $this->tinyicon, 'smallIcon' => $this->smallicon, 'largeIcon' => $this->largeicon, 'foregroundColour' => $this->foregroundcolour, 'backgroundColour' => $this->backgroundcolour, 'headings' => $this->headings, 'paragraphs' => $this->paragraphs, 'lastUpdated' => $this->lastupdated], $this -> specialAttributes));
+        return array_filter(array_merge(['type' => $this->type, 'title' => $this->title, 'shortTitle' => $this->shorttitle, 'subtitle' => $this->subtitle, 'body' => $this->body, 'tinyIcon' => $this->tinyicon, 'smallIcon' => $this->smallicon, 'largeIcon' => $this->largeicon, 'primaryColor' => $this->foregroundcolor,'secondaryColor'=>$this->secondaryColor,'backgroundColor' => $this->backgroundcolor, 'headings' => $this->headings, 'paragraphs' => $this->paragraphs, 'lastUpdated' => $this->lastupdated], $this -> specialAttributes));
     }
 
 }
